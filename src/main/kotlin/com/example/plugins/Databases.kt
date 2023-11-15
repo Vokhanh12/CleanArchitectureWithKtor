@@ -15,6 +15,7 @@ fun Application.configureDatabases() {
             user = "sa",
             password = "Aa@123456789"
         )
+
     val userService = UserService(database)
 
     routing {
