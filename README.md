@@ -161,6 +161,18 @@ class OrderRepository : BaseRepository<Order>() , IOrderRepository {
 }
 ```
 
+<h3>cơ sở dữ liệu</h3>
+
+
+![image](https://github.com/Vokhanh12/CleanArchitectureWithKtor/assets/36543564/c14ccd8a-1694-4ce1-9e82-1900239545a2)
+
+
+<h3>Bumm ta có kết quả</h3>
+
+
+![image](https://github.com/Vokhanh12/CleanArchitectureWithKtor/assets/36543564/04a35953-9885-45d6-a1f1-9e0456663779)
+
+
 Lưu ý:
 
 
