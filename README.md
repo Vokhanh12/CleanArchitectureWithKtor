@@ -161,3 +161,13 @@ class OrderRepository : BaseRepository<Order>() , IOrderRepository {
 }
 ```
 
+Lưu ý:
+
+
+1.Đảm bảo rằng thư viện Exposed đã được thêm vào classpath của bạn.
+
+
+2.Thông tin kết nối như URL, driver, username, và password phải được điều chỉnh theo cấu hình của cơ sở dữ liệu SQL Server của bạn.
+
+
+
