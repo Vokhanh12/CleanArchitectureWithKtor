@@ -77,5 +77,83 @@ implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
 implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
 ```
 
+<h3>Bước 2: Cấu hình Kết Nối</h
+                              
+                              3>
+Cấu hình kết nối đến cơ sở dữ liệu SQL Server trong hàm configureDatabases của bạn. Thay thế phần cấu hình hiện tại bằng thông tin kết nối của bạn:
 
+
+```gradle
+import org.jetbrains.exposed.sql.Database
+
+fun Application.configureDatabases() {
+    Database.connect(
+        url = "jdbc:sqlserver://<your-server>:<port>;databaseName=<your-database>",
+        driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+        user = "<your-username>",
+        password = "<your-password>"
+    )
+}
+```
+
+
+<h3>Bước 3: Cập Nhật Kho Lưu Trữ</h3>
+
+
+Cập nhật kho lưu trữ của bạn để sử dụng Exposed thay vì lưu trữ trong bộ nhớ. Dưới đây là một ví dụ với OrderRepository:
+
+
+```kotlin
+import org.jetbrains.exposed.dao.IntIdTable
+import org.jetbrains.exposed.sql.*
+
+object Orders : IntIdTable() {
+    val name = varchar("name", 255)
+}
+
+class OrderRepository : BaseRepository<Order>() , IOrderRepository {
+
+    override suspend fun getAll(): List<Order> {
+        return transaction {
+            Orders.selectAll().map { rowToOrder(it) }
+        }
+    }
+
+    override suspend fun findById(id: String): Order? {
+        return transaction {
+            Orders.select { Orders.id eq id.toInt() }.singleOrNull()?.let { rowToOrder(it) }
+        }
+    }
+
+    override suspend fun insert(entity: Order) {
+        transaction {
+            val id = Orders
+                .insertAndGetId {
+                    it[name] = entity.name
+                }
+            entity.id = id.value.toString()
+        }
+    }
+
+    override suspend fun delete(id: String) {
+        transaction {
+            Orders.deleteWhere { Orders.id eq id.toInt() }
+        }
+    }
+
+    override suspend fun replace(item: Order) {
+        transaction {
+            Orders.update({ Orders.id eq item.id.toInt() }) {
+                it[name] = item.name
+            }
+        }
+    }
+
+    private fun rowToOrder(row: ResultRow): Order {
+        return Order(row[Orders.id].value.toString()).apply {
+            name = row[Orders.name]
+        }
+    }
+}
+```
 
