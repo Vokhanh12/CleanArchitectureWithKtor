@@ -6,6 +6,8 @@
 ![image](https://github.com/Vokhanh12/CleanArchitectureWithKtor/assets/36543564/1cfdd173-980c-488c-aba3-1f6ebffbe40a)
 
 
+
+
 <h3>1.Tiêm phụ thuộc(Dependency Injection):</h3>
 
 
@@ -61,6 +63,8 @@ Xem xét việc viết các bài kiểm thử đơn vị, đặc biệt là đ�
 
 
 <h2>Cập nhật cơ sở dữ liệu với mô hinh</h2>
+
+
 
 
 Để cập nhật kho lưu trữ của bạn để tương tác với cơ sở dữ liệu SQL Server, bạn cần thực hiện một số bước. Dưới đây là hướng dẫn giả định với sử dụng thư viện Exposed để kết nối và thao tác với SQL Server.
